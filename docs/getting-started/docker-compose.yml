@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   indy_pool:
     build:
@@ -23,16 +24,38 @@ services:
         ipv4_address: 10.0.0.2
     volumes:
        - sandbox:/var/lib/indy/sandbox/
-  jupyter:
+  steward:
     build:
       context: .
-      dockerfile: getting-started.dockerfile
-    command: jupyter notebook --ip=0.0.0.0
-    image: getting-started
-    container_name: getting_started
+      dockerfile: steward.dockerfile
+    command: flask run
+    # command: jupyter notebook --ip=0.0.0.0
+    image: steward
+    container_name: steward
     working_dir: /home/indy
     volumes:
-       - ./getting-started.ipynb:/home/indy/getting-started.ipynb
+       - ./steward.py:/home/indy/steward.py
+       - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'steward'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8887:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+  iot_device1:
+    build:
+      context: .
+      dockerfile: iot_device1.dockerfile
+    command: jupyter notebook --ip=0.0.0.0
+    image: iot_device1
+    container_name: iot_device1
+    working_dir: /home/indy
+    volumes:
+       - ./iot_device1.ipynb:/home/indy/iot_device1.ipynb
        - sandbox:/home/indy/sandbox
     ports:
       - "8888:8888"
@@ -40,6 +63,75 @@ services:
       - pool_network
     links:
       - indy_pool
+  iot_device2:
+    build:
+      context: .
+      dockerfile: iot_device2.dockerfile
+    command: jupyter notebook --ip=0.0.0.0
+    image: iot_device2
+    container_name: iot_device2
+    working_dir: /home/indy
+    volumes:
+       - ./iot_device2.ipynb:/home/indy/iot_device2.ipynb
+       - sandbox:/home/indy/sandbox
+    ports:
+      - "8889:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+  retailer:
+    build:
+      context: .
+      dockerfile: retailer.dockerfile
+    command: jupyter notebook --ip=0.0.0.0
+    image: retailer
+    container_name: retailer
+    working_dir: /home/indy
+    volumes:
+       - ./retailer.ipynb:/home/indy/retailer.ipynb
+       - sandbox:/home/indy/sandbox
+    ports:
+      - "8890:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+  supplier:
+    build:
+      context: .
+      dockerfile: supplier.dockerfile
+    command: jupyter notebook --ip=0.0.0.0
+    image: supplier
+    container_name: supplier
+    working_dir: /home/indy
+    volumes:
+       - ./supplier.ipynb:/home/indy/supplier.ipynb
+       - sandbox:/home/indy/sandbox
+    ports:
+      - "8891:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+  auditor:
+    build:
+      context: .
+      dockerfile: auditor.dockerfile
+    command: jupyter notebook --ip=0.0.0.0
+    image: auditor
+    container_name: auditor
+    working_dir: /home/indy
+    volumes:
+       - ./auditor.ipynb:/home/indy/auditor.ipynb
+       - sandbox:/home/indy/sandbox
+    ports:
+      - "8892:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+
 networks:
   pool_network:
     driver: bridge
@@ -48,5 +140,6 @@ networks:
       config:
         -
           subnet: 10.0.0.0/24
+
 volumes:
      sandbox:
