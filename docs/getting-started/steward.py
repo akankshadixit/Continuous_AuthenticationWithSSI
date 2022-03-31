@@ -78,11 +78,13 @@ app = Flask(__name__)
 def steward_data():
   print("=== Vikram  ==", flush=True)
 
-  client = MongoClient(host='mongodb://stedsadsdsadsssssward_db', port=27017, username='root', password='pass', authSource="admin")
+  client = MongoClient(host='steward_db', port=27017, username='root', password='pass', authSource="admin")
   db = client["steward_db"]
 
-  db.animal_tb.find()
-  return "========Vikram======="
+  _animals = db.steward_tb.find()
+  animals = [{"id": animal["id"], "name": animal["name"], "type": animal["type"]} for animal in _animals]
+  print(animals, flush=True)
+  return jsonify({"animals": animals})
 
 # thread.join()
 

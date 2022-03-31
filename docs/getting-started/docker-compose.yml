@@ -34,7 +34,9 @@ services:
     volumes:
       - ./init_steward_db.js:/docker-entrypoint-initdb.d/init-db.js:ro
     ports:
-    - 27017:27017
+      - 27017:27017
+    networks:
+      - pool_network
   steward:
     build:
       context: .
