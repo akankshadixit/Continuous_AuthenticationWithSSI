@@ -39,7 +39,7 @@ services:
     build:
       context: .
       dockerfile: steward.dockerfile
-    command: flask run
+    command: flask run --host=0.0.0.0
     # command: jupyter notebook --ip=0.0.0.0
     image: steward
     container_name: steward
@@ -49,6 +49,7 @@ services:
        - sandbox:/home/indy/sandbox
     environment:
       FLASK_APP: 'steward'
+      FLASK_ENV: 'development'
       LC_ALL: 'C.UTF-8'
       LANG: 'C.UTF-8'
     ports:

@@ -76,7 +76,7 @@ app = Flask(__name__)
 
 @app.route('/steward')
 def steward_data():
-  print("=== Vikram  ==")
+  print("=== Vikram  ==", flush=True)
 
   client = MongoClient(host='mongodb://stedsadsdsadsssssward_db', port=27017, username='root', password='pass', authSource="admin")
   db = client["steward_db"]
