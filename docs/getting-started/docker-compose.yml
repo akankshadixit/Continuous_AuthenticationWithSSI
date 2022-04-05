@@ -42,11 +42,11 @@ services:
       context: .
       dockerfile: steward.dockerfile
     command: flask run --host=0.0.0.0
-    # command: jupyter notebook --ip=0.0.0.0
     image: steward
     container_name: steward
     working_dir: /home/indy
     volumes:
+       - ./steward.ipynb:/home/indy/steward.ipynb
        - ./steward.py:/home/indy/steward.py
        - sandbox:/home/indy/sandbox
     environment:
@@ -62,6 +62,43 @@ services:
     links:
       - indy_pool
       - steward_db
+  supplier:
+    build:
+      context: .
+      dockerfile: supplier.dockerfile
+    command: flask run --host=0.0.0.0
+    image: supplier
+    container_name: supplier
+    working_dir: /home/indy
+    volumes:
+      - ./supplier.ipynb:/home/indy/supplier.ipynb
+      - ./supplier.py:/home/indy/supplier.py
+      - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'supplier'
+      FLASK_ENV: 'development'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8891:8888"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+      - supplier_db
+  supplier_db:
+    image: mongo:latest
+    hostname: supplier_db_host
+    environment:
+      - MONGO_INITDB_DATABASE=supplier_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - ./init_supplier_db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    ports:
+      - 27018:27017
+    networks:
+      - pool_network
   # iot_device1:
   #   build:
   #     context: .
@@ -109,23 +146,6 @@ services:
   #      - sandbox:/home/indy/sandbox
   #   ports:
   #     - "8890:8888"
-  #   networks:
-  #     - pool_network
-  #   links:
-  #     - indy_pool
-  # supplier:
-  #   build:
-  #     context: .
-  #     dockerfile: supplier.dockerfile
-  #   command: jupyter notebook --ip=0.0.0.0
-  #   image: supplier
-  #   container_name: supplier
-  #   working_dir: /home/indy
-  #   volumes:
-  #      - ./supplier.ipynb:/home/indy/supplier.ipynb
-  #      - sandbox:/home/indy/sandbox
-  #   ports:
-  #     - "8891:8888"
   #   networks:
   #     - pool_network
   #   links:
