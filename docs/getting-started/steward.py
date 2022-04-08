@@ -26,7 +26,25 @@ def start_steward_agent():
   os.system('jupyter nbconvert --to notebook --inplace --execute steward.ipynb')
   return "Steward ran successfully"
 
-@app.route('/get_verinym')
-def get_verinym():
-  os.system('jupyter nbconvert --to notebook --inplace --execute steward_get_verinym.ipynb')
-  return "Steward ran successfully"
+@app.route('/get_trust_anchor_verinym', methods = ['POST'])
+def get_trust_anchor_verinym():
+  entity = request.get_json( )
+  entity = entity['entity']
+  
+  client = MongoClient(host='steward_db', port=27017, username='root', password='pass', authSource="admin")
+  db = client["steward_db"]
+
+  db.steward_tb.insert_one(entity);
+
+  db.steward_tb.find_one_and_update({"name": "verinym_for"}, { "$set": { "value": entity["name"] } }, upsert=True);
+
+  print(entity, flush=True)
+
+  # os.system('jupyter nbconvert --to notebook --inplace --execute steward_get_verinym.ipynb')
+  os.system('jupyter notebook steward_get_verinym.ipynb --ip=0.0.0.0')
+
+  entity = db.steward_tb.find_one({"name": entity["name"]})
+
+  print(entity, flush=True)
+
+  return entity
