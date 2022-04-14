@@ -73,6 +73,7 @@ services:
     working_dir: /home/indy
     volumes:
       - ./supplier.ipynb:/home/indy/supplier.ipynb
+      - ./supplier_generate_credential_schema.ipynb:/home/indy/supplier_generate_credential_schema.ipynb
       - ./supplier.py:/home/indy/supplier.py
       - sandbox:/home/indy/sandbox
     environment:
