@@ -25,3 +25,7 @@ def supplier_data():
 def start_supplier_agent():
   os.system('jupyter nbconvert --to notebook --inplace --execute supplier.ipynb')
   return "Supplier ran successfully"
+
+@app.route('/generate_crdential_scheme')
+def generate_credential_schema():
+   os.system('jupyter notebook supplier_generate_credential_scheme.ipynb --ip=0.0.0.0')
