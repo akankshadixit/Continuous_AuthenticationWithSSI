@@ -36,3 +36,4 @@ RUN pip install pymongo
 USER indy
 
 EXPOSE 8888
+
