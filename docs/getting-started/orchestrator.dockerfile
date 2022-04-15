@@ -29,8 +29,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 \
     && apt-get install -y \
     libindy=1.11.0
 
-RUN python3 -m pip install Flask
-
 RUN pip install pymongo
 
 USER indy

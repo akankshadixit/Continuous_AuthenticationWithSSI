@@ -37,95 +37,98 @@ services:
       - 27017:27017
     networks:
       - pool_network
-  # steward:
-  #   build:
-  #     context: .
-  #     dockerfile: steward.dockerfile
-  #   command: flask run --host=0.0.0.0
-  #   image: steward
-  #   container_name: steward
-  #   working_dir: /home/indy
-  #   volumes:
-  #      - ./steward.ipynb:/home/indy/steward.ipynb
-  #      - ./steward_get_verinym.ipynb:/home/indy/steward_get_verinym.ipynb
-  #      - ./steward.py:/home/indy/steward.py
-  #      - sandbox:/home/indy/sandbox
-  #   environment:
-  #     FLASK_APP: 'steward'
-  #     FLASK_ENV: 'development'
-  #     LC_ALL: 'C.UTF-8'
-  #     LANG: 'C.UTF-8'
-  #   ports:
-  #     - "8887:8888"
-  #     - "5001:5000"
-  #   networks:
-  #     - pool_network
-  #   links:
-  #     - indy_pool
-  #     - steward_db
-  # supplier:
-  #   build:
-  #     context: .
-  #     dockerfile: supplier.dockerfile
-  #   command: flask run --host=0.0.0.0
-  #   image: supplier
-  #   container_name: supplier
-  #   working_dir: /home/indy
-  #   volumes:
-  #     - ./supplier.ipynb:/home/indy/supplier.ipynb
-  #     - ./supplier_generate_credential_schema.ipynb:/home/indy/supplier_generate_credential_schema.ipynb
-  #     - ./supplier.py:/home/indy/supplier.py
-  #     - sandbox:/home/indy/sandbox
-  #   environment:
-  #     FLASK_APP: 'supplier'
-  #     FLASK_ENV: 'development'
-  #     LC_ALL: 'C.UTF-8'
-  #     LANG: 'C.UTF-8'
-  #   ports:
-  #     - "8891:8888"
-  #   networks:
-  #     - pool_network
-  #   links:
-  #     - indy_pool
-  #     - supplier_db
-  # supplier_db:
-  #   image: mongo:latest
-  #   hostname: supplier_db_host
-  #   environment:
-  #     - MONGO_INITDB_DATABASE=supplier_db
-  #     - MONGO_INITDB_ROOT_USERNAME=root
-  #     - MONGO_INITDB_ROOT_PASSWORD=pass
-  #   volumes:
-  #     - ./init_supplier_db.js:/docker-entrypoint-initdb.d/init-db.js:ro
-  #   ports:
-  #     - 27018:27017
-  #   networks:
-  #     - pool_network
-  # retailer:
-  #   build:
-  #     context: .
-  #     dockerfile: retailer.dockerfile
-  #   command: flask run --host=0.0.0.0
-  #   image: retailer
-  #   container_name: retailer
-  #   working_dir: /home/indy
-  #   volumes:
-  #     - ./retailer.ipynb:/home/indy/retailer.ipynb
-  #     - ./retailer.py:/home/indy/retailer.py
-  #     - sandbox:/home/indy/sandbox
-  #   environment:
-  #     FLASK_APP: 'retailer'
-  #     FLASK_ENV: 'development'
-  #     LC_ALL: 'C.UTF-8'
-  #     LANG: 'C.UTF-8'
-  #   ports:
-  #     - "8892:8888"
-  #   networks:
-  #     - pool_network
-  #   links:
-  #     - indy_pool
-  #     - retailer_db
-  # retailer_db:
+  steward:
+    build:
+      context: .
+      dockerfile: steward.dockerfile
+    command: flask run --host=0.0.0.0
+    image: steward
+    container_name: steward
+    working_dir: /home/indy
+    volumes:
+       - ./steward.ipynb:/home/indy/steward.ipynb
+       - ./steward_get_verinym.ipynb:/home/indy/steward_get_verinym.ipynb
+       - ./steward.py:/home/indy/steward.py
+       - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'steward'
+      FLASK_ENV: 'development'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8887:8888"
+      - "5001:5000"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+      - steward_db
+  supplier:
+    build:
+      context: .
+      dockerfile: supplier.dockerfile
+    command: flask run --host=0.0.0.0
+    image: supplier
+    container_name: supplier
+    working_dir: /home/indy
+    volumes:
+      - ./supplier.ipynb:/home/indy/supplier.ipynb
+      - ./supplier_generate_credential_schema.ipynb:/home/indy/supplier_generate_credential_schema.ipynb
+      - ./send_credential_offer_to_device.ipynb:/home/indy/send_credential_offer_to_device.ipynb
+      - ./supplier.py:/home/indy/supplier.py
+      - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'supplier'
+      FLASK_ENV: 'development'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8891:8888"
+      - "5002:5000"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+      - supplier_db
+  supplier_db:
+    image: mongo:latest
+    hostname: supplier_db_host
+    environment:
+      - MONGO_INITDB_DATABASE=supplier_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - ./init_supplier_db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    ports:
+      - 27018:27017
+    networks:
+      - pool_network
+  retailer:
+    build:
+      context: .
+      dockerfile: retailer.dockerfile
+    command: flask run --host=0.0.0.0
+    image: retailer
+    container_name: retailer
+    working_dir: /home/indy
+    volumes:
+      - ./retailer.ipynb:/home/indy/retailer.ipynb
+      - ./retailer.py:/home/indy/retailer.py
+      - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'retailer'
+      FLASK_ENV: 'development'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8892:8888"
+      - "5003:5000"
+    networks:
+      - pool_network
+    links:
+      - indy_pool
+      - retailer_db
+  retailer_db:
     image: mongo:latest
     hostname: retailer_db_host
     environment:
@@ -138,18 +141,56 @@ services:
       - 27019:27017
     networks:
       - pool_network
-  orchestrator:
+  device1:
     build:
       context: .
-      dockerfile: orchestrator.dockerfile
-    command: python orchestrator.py
-    image: orchestrator
-    container_name: orchestrator
+      dockerfile: device1.dockerfile
+    command: flask run --host=0.0.0.0
+    image: device1
+    container_name: device1
     working_dir: /home/indy
     volumes:
-      - ./orchestrator.py:/home/indy/orchestrator.py
+       - ./steward.ipynb:/home/indy/device1.ipynb
+       - ./device1.py:/home/indy/device1.py
+       - sandbox:/home/indy/sandbox
+    environment:
+      FLASK_APP: 'device1'
+      FLASK_ENV: 'development'
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+    ports:
+      - "8893:8888"
+      - "5004:5000"
     networks:
       - pool_network
+    links:
+      - indy_pool
+      - device1_db
+  device1_db:
+    image: mongo:latest
+    hostname: device1_db_host
+    environment:
+      - MONGO_INITDB_DATABASE=device1_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - ./init_device1_db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    ports:
+      - 27020:27017
+    networks:
+      - pool_network
+  # orchestrator:
+  #   build:
+  #     context: .
+  #     dockerfile: orchestrator.dockerfile
+  #   command: python orchestrator.py
+  #   image: orchestrator
+  #   container_name: orchestrator
+  #   working_dir: /home/indy
+  #   volumes:
+  #     - ./orchestrator.py:/home/indy/orchestrator.py
+  #   networks:
+  #     - pool_network
     # links:
     #   - indy_pool
     #   - retailer
