@@ -12,7 +12,7 @@ app = Flask(__name__)
 def device1_data():
   print("=== device1  ==", flush=True)
 
-  client = MongoClient(host='device1_db', port=27017, username='root', password='pass', authSource="admin")
+  client = MongoClient(host='device1_db', port=27020, username='root', password='pass', authSource="admin")
   db = client["device1_db"]
 
   device1 = db.device1_tb.find({"name": "device1"})
@@ -30,7 +30,7 @@ def start_supplier_agent():
 def accept_credential_offer_request():
   entity = request.get_json( )
   offer = entity['offer']
-  client = MongoClient(host='device1_db', port=27017, username='root', password='pass', authSource="admin")
+  client = MongoClient(host='device1_db', port=27020, username='root', password='pass', authSource="admin")
   db = client["device1_db"]
   db.device1_db.insert_one({"device1_credential_offer": offer});
   return "Credetial offer accepted successfully"
