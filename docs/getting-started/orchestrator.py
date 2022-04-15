@@ -26,11 +26,11 @@ import requests
 
 ----------------------------------------------------------- Credential Schema and Definition Created
 
-# Supplier Send Credential Offer to IOT Device 1 - TBD
+# Supplier Send Credential Offer to IOT Device 1 -- [Code Done]
 
-# IOT Device 1 pull credentail Definition offer from Blockchain - TBD
+# IOT Device 1 pull credentail Definition offer from Blockchain, device 1 will pull defintion and store in Mongo -- TBD
 
-# IOT Device 1 Send Credential Request to Supplier - TBD
+# IOT Device 1 Send Credential Request to Supplier, API to accept credential request in supplier and return credential -- TBD
 
 -----------------------------------------------------------
 
