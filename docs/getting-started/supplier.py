@@ -26,20 +26,6 @@ def start_supplier_agent():
   os.system('jupyter nbconvert --to notebook --inplace --execute supplier.ipynb')
   return "Supplier ran successfully"
 
-@app.route('/generate_crdential_schema')
+@app.route('/generate_credential_scheme')
 def generate_credential_schema():
-  os.system('jupyter notebook supplier_generate_credential_schema.ipynb --ip=0.0.0.0')
-
-@app.route('/send_credential_offer_to_device', methods = ['POST'])
-def send_credential_offer_to_device():
-  entity = request.get_json( )
-  entity = entity['entity']
-
-  client = MongoClient(host='supplier_db', port=27017, username='root', password='pass', authSource="admin")
-  db = client["supplier_db"]
-
-  db.steward_tb.find_one_and_update({"name": "send_credential_offer_to_device"}, { "$set": { "value": entity } }, upsert=True);
-
-  print(entity, flush=True)
-
-  os.system('jupyter notebook send_credential_offer_to_device.ipynb --ip=0.0.0.0')
+   os.system('jupyter notebook supplier_generate_credential_scheme.ipynb --ip=0.0.0.0')

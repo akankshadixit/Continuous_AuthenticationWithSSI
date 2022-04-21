@@ -28,9 +28,16 @@ def start_supplier_agent():
 
 @app.route('/accept_credential_offer_request', methods = ['POST'])
 def accept_credential_offer_request():
-  entity = request.get_json( )
-  offer = entity['offer']
+  offer = request.get_json()
+  #offer = entity['offer']
   client = MongoClient(host='device1_db', port=27017, username='root', password='pass', authSource="admin")
   db = client["device1_db"]
-  db.device1_db.insert_one({"device1_credential_offer": offer});
+ 
+  db.device1_db.insert_one({"cred_offer": offer});
+  db.steward_tb.find_one_and_update({"name": "credential_offer"}, { "$set": { "value": offer} }, upsert=True);
+
   return "Credetial offer accepted successfully"
+
+
+@app.route('/request_credential_from_supplier', methods = ['GET'])
+def send_cred_request_to_supplier():
