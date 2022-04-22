@@ -152,6 +152,7 @@ services:
     volumes:
        - ./steward.ipynb:/home/indy/device1.ipynb
        - ./device1.py:/home/indy/device1.py
+       - ./device1.dockerfile:/home/indy/device1.dockerfile
        - sandbox:/home/indy/sandbox
     environment:
       FLASK_APP: 'device1'
@@ -179,7 +180,7 @@ services:
       - 27020:27017
     networks:
       - pool_network
-  # orchestrator:
+  # # orchestrator:
   #   build:
   #     context: .
   #     dockerfile: orchestrator.dockerfile
