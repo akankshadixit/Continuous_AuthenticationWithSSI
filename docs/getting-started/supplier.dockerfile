@@ -33,6 +33,8 @@ RUN python3 -m pip install Flask
 
 RUN pip install pymongo
 
+RUN pip install requests
+
 USER indy
 
 EXPOSE 8888
