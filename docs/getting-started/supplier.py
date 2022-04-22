@@ -29,3 +29,6 @@ def start_supplier_agent():
 @app.route('/generate_credential_scheme')
 def generate_credential_schema():
    os.system('jupyter notebook supplier_generate_credential_scheme.ipynb --ip=0.0.0.0')
+
+#@app.route('/accept_credential_request')
+#def accept_credential_request():

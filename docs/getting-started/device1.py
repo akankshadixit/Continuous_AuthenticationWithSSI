@@ -26,25 +26,22 @@ def start_supplier_agent():
   os.system('jupyter nbconvert --to notebook --inplace --execute device1.ipynb')
   return "Started Device1 successfully"
 
-@app.route('/accept_credential_offer_request', methods = ['POST'])
-def accept_credential_offer_request():
+@app.route('/accept_credential_offer', methods = ['POST'])
+def accept_credential_offer():
 
   offer = request.get_json()
   #offer = entity['offer']
   client = MongoClient(host='device1_db', port=27017, username='root', password='pass', authSource="admin")
 
-  entity = request.get_json( )
-  offer = entity['offer']
-  client = MongoClient(host='device1_db', port=27020, username='root', password='pass', authSource="admin")
+  #entity = request.get_json( )
+  #offer = entity['offer']
+  #client = MongoClient(host='device1_db', port=27020, username='root', password='pass', authSource="admin")
 
   db = client["device1_db"]
  
   db.device1_db.insert_one({offer});
-  db.steward_tb.find_one_and_update({"name": "credential_offer"}, { "$set": { "value": offer} }, upsert=True);
+  db.device1_tb.find_one_and_update({"name": "credential_offer"}, { "$set": { "value": offer} }, upsert=True);
 
   return "Credential offer accepted successfully"
 
-
-@app.route('/request_credential_from_supplier', methods = ['GET'])
-def send_cred_request_to_supplier():
 
