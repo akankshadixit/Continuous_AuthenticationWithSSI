@@ -18,13 +18,13 @@ import requests
 
 # Create IOT Device 2 Wallet
 
------------------------------------------------------------ All Agents and devices registered
+#----------------------------------------------------------- All Agents and devices registered
 
 # Supplier Create Credential Schema & Definition -- [Code Done]
 
 # Retailer Create Credential Schema & Definition
 
------------------------------------------------------------ Credential Schema and Definition Created
+#----------------------------------------------------------- Credential Schema and Definition Created
 
 # Supplier Send Credential Offer to IOT Device 1 -- [Code Done]
 
@@ -32,7 +32,7 @@ import requests
 
 # IOT Device 1 Send Credential Request to Supplier, API to accept credential request in supplier and return credential -- TBD
 
------------------------------------------------------------
+#-----------------------------------------------------------
 
 # Supplier Send Credential Offer to IOT Device 2
 
@@ -40,7 +40,7 @@ import requests
 
 # IOT Device 2 Send Credential Request to Supplier
 
------------------------------------------------------------
+#-----------------------------------------------------------
 
 # Retailer Send Credential Offer to IOT Device 1
 
@@ -48,7 +48,7 @@ import requests
 
 # IOT Device 1 Send Credential Request to Retailer
 
------------------------------------------------------------
+##-----------------------------------------------------------
 
 # Retailer Send Credential Offer to IOT Device 2
 
@@ -56,4 +56,4 @@ import requests
 
 # IOT Device 2 Send Credential Request to Retailer
 
------------------------------------------------------------ All Credentials Issued
+#----------------------------------------------------------- All Credentials Issued
