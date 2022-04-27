@@ -31,6 +31,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 \
 
 RUN pip install pymongo
 
+RUN pip install requests
+
 USER indy
 
 EXPOSE 8888

@@ -363,3 +363,62 @@ If your application needs to use Libindy from multiple processes you should keep
       If any out-of-process requirements are possible, the caller must fork first **before any calls to Libindy**
       (otherwise the command from a child thread will hang). Fork is only available on Unix.
     * Popen - spawns a new OS level process which will create its own child threads. Popen is cross-platform.
+
+
+# Start Steward Agent -- [Code Done]
+
+# Start Supplier Agent -- [Code Done]
+
+# Create Supplier TA -- [Code Done]
+
+# Start Retailer Agent -- [Code Done]
+
+# Create Retailer TA -- [Code Done]
+
+# Start IOT Device 1 Agent -- [Code Done]
+
+# Create IOT Device 1 Wallet -- [Code Done]
+
+# Start IOT Device 2 Agent
+
+# Create IOT Device 2 Wallet
+
+#----------------------------------------------------------- All Agents and devices registered
+
+# Supplier Create Credential Schema & Definition -- [Code Done]
+
+# Retailer Create Credential Schema & Definition
+
+#----------------------------------------------------------- Credential Schema and Definition Created
+
+# Supplier Send Credential Offer to IOT Device 1 -- [Code Done]
+
+# IOT Device 1 pull credentail Definition offer from Blockchain, device 1 will pull defintion and store in Mongo -- TBD
+
+# IOT Device 1 Send Credential Request to Supplier, API to accept credential request in supplier and return credential -- TBD
+
+#-----------------------------------------------------------
+
+# Supplier Send Credential Offer to IOT Device 2
+
+# IOT Device 2 pull credentail Definition offer from Blockchain
+
+# IOT Device 2 Send Credential Request to Supplier
+
+#-----------------------------------------------------------
+
+# Retailer Send Credential Offer to IOT Device 1
+
+# IOT Device 1 pull credentail Definition offer from Blockchain
+
+# IOT Device 1 Send Credential Request to Retailer
+
+##-----------------------------------------------------------
+
+# Retailer Send Credential Offer to IOT Device 2
+
+# IOT Device 2 pull credentail Definition offer from Blockchain
+
+# IOT Device 2 Send Credential Request to Retailer
+
+#----------------------------------------------------------- All Credentials Issued
