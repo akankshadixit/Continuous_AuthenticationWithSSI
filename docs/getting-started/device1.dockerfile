@@ -31,7 +31,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88 \
 
 RUN python3 -m pip install Flask
 
-RUN pip install pymongo
+RUN python3 -m pip3 install pymongo
 
 USER indy
 

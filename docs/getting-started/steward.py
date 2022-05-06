@@ -21,9 +21,23 @@ def steward_data():
   print(steward, flush=True)
   return steward
 
+@app.route('/get_pool_config')
+def send_pool_config():
+  client = MongoClient(host='steward_db', port=27017, username='root', password='pass', authSource="admin")
+  db = client["steward_db"]
+  print('========Point 1')
+  pool = db.steward_tb.find_one({"name": "pool1"})
+  pool = dumps(pool)
+  print('========Point 2')
+  print(pool)
+  print('========Point 3')
+  return pool
+
 @app.route('/start_steward_agent')
 def start_steward_agent():
-  os.system('jupyter nbconvert --to notebook --inplace --execute steward.ipynb')
+  #os.system('jupyter nbconvert --to notebook --inplace --execute steward.ipynb')
+  os.system('jupyter notebook steward.ipynb --ip=0.0.0.0')
+
   return "Steward ran successfully"
 
 @app.route('/get_trust_anchor_verinym', methods = ['POST'])
@@ -34,6 +48,7 @@ def get_trust_anchor_verinym():
   client = MongoClient(host='steward_db', port=27017, username='root', password='pass', authSource="admin")
   db = client["steward_db"]
 
+  print(entity)
   db.steward_tb.insert_one(entity);
 
   db.steward_tb.find_one_and_update({"name": "verinym_for"}, { "$set": { "value": entity["name"] } }, upsert=True);
