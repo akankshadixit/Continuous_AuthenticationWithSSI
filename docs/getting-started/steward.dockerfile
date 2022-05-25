@@ -35,6 +35,12 @@ RUN pip install pymongo
 
 RUN pip install requests
 
+RUN pip install ipynb
+
+RUN pip install import_ipynb
+
+RUN pip install APScheduler
+
 USER indy
 
 EXPOSE 8888

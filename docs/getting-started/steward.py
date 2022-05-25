@@ -3,8 +3,16 @@ import pymongo
 from pymongo import MongoClient
 from flask import Flask, request, jsonify
 from bson.json_util import dumps
+from apscheduler.schedulers.background import BackgroundScheduler
 
 import json
+
+def policy_enforcer():
+  print("Policy enforcer is running!")
+
+sched = BackgroundScheduler()
+sched.add_job(func=policy_enforcer, trigger='interval', seconds=1)
+sched.start()
 
 app = Flask(__name__)
 
@@ -63,3 +71,6 @@ def get_trust_anchor_verinym():
   print(entity, flush=True)
 
   return entity
+
+if __name__ == "__main__":
+  app.run()
