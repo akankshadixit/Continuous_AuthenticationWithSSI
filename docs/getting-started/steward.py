@@ -1,5 +1,6 @@
 import os
 import pymongo
+import sys
 from pymongo import MongoClient
 from flask import Flask, request, jsonify
 from bson.json_util import dumps
@@ -8,10 +9,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import json
 
 def policy_enforcer():
-  print("Policy enforcer is running!")
+  print('Policy enforcer!')
 
 sched = BackgroundScheduler()
-sched.add_job(func=policy_enforcer, trigger='interval', seconds=1)
+sched.add_job(func=policy_enforcer, trigger='interval', seconds=5)
 sched.start()
 
 app = Flask(__name__)
