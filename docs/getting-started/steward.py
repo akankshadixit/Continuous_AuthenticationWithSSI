@@ -9,10 +9,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import json
 
 def policy_enforcer():
-  print('Policy enforcer!')
+  # os.system('jupyter nbconvert --to notebook --inplace --execute policy_check.ipynb')
+  # os.system('jupyter notebook policy_check.ipynb --ip=0.0.0.0')
+  print("Something")
+
 
 sched = BackgroundScheduler()
-sched.add_job(func=policy_enforcer, trigger='interval', seconds=5)
+sched.add_job(func=policy_enforcer, trigger='interval', seconds=3600)
 sched.start()
 
 app = Flask(__name__)

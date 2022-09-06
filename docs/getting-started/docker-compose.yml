@@ -19,17 +19,21 @@ services:
       - "9706:9706"
       - "9707:9707"
       - "9708:9708"
-      - "9709:9710"
-      - "9711:9712"
-      - "9713:9714"
-      - "9715:9716"
-     
+      - "9709:9709"
+      - "9710:9710"
+      - "9711:9711"
+      - "9712:9712"
+      - "9713:9713"
+      - "9714:9714"
+      - "9715:9715"
+      - "9716:9716"
+
+      
     networks:
       pool_network:
         ipv4_address: 10.0.0.2
     volumes:
        - sandbox:/var/lib/indy/sandbox/
-
   steward_db:
     image: mongo:latest
     hostname: steward_db_host
@@ -54,6 +58,7 @@ services:
     volumes:
        - ./steward.ipynb:/home/indy/steward.ipynb
        - ./steward_wrapper.ipynb:/home/indy/steward_wrapper.ipynb
+       - ./policy_check_wrapper.ipynb:/home/indy/policy_check_wrapper.ipynb
        - ./steward.py:/home/indy/steward.py
        - sandbox:/home/indy/sandbox
     environment:
