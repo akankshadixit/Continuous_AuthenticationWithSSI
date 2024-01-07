@@ -35,6 +35,8 @@ RUN pip install pymongo
 
 RUN pip install requests
 
+RUN pip install ipynb
+
 USER indy
 
 EXPOSE 8888
