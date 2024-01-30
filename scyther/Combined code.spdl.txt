@@ -1,0 +1,76 @@
+usertype xor;
+usertype Response;
+hashfunction hash;
+
+
+protocol datamarketplace(Bi, So, Sx){
+	role So{
+			fresh DIDso, proofreq, VCso: Nonce ;
+			var DIDb, PDIDi, usagereq, vcreq, wi: Nonce;
+
+			recv_5(Bi, So, {Bi, DIDb, usagereq, vcreq} pk(So) );
+
+			send_6(So, Bi, { {DIDb, DIDso, VCso} sk(So),  proofreq} pk(Bi) );
+			
+			var pi, hVcred: Response;
+			recv_7(Bi, So, { {pi, DIDso, PDIDi, hVcred} sk(Bi), wi} pk(So), hVcred) ;
+			
+			claim_So1(So, Alive);
+			claim_So2(So, Weakagree);
+			claim_So3(So, Secret, pi);
+			claim_So4(So, Niagree);
+			claim_So5(So, Nisynch);
+		}
+
+		role Bi
+		{
+			fresh DIDb, PDIDb, md, phiid, reqid, Ni, payid, PDIDi, usagereq, vcreq,wi : Nonce;			
+			var payreq, n, ki, cred, nnew, VCi, DIDso, VCso, proofreq : Nonce;
+			
+			send_1(Bi, Sx, {Bi, DIDb, PDIDb, md, phiid, reqid} pk(Sx) );
+
+			var hV: Response;
+			recv_2(Sx, Bi, {{DIDb, n, ki} sk(Sx), payreq, hV} pk(Bi), hash(hV) );
+
+			fresh hV2: Response;
+			send_3(Bi, Sx, {{ki,Ni} sk(Bi), hV2, payid} pk(Sx), hash(hV2) );
+
+			recv_4(Sx, Bi, { {VCi} sk(Sx), cred, xor(ki, nnew), wi } pk(Bi) );	
+
+
+			send_5(Bi, So, {Bi, DIDb, usagereq, vcreq} pk(So) );
+
+			recv_6(So, Bi,{ {DIDb, DIDso, VCso} sk(So),  proofreq} pk(Bi) );
+
+			fresh pi, hVcred: Response;
+			send_7(Bi, So, {{pi,DIDso,  PDIDi, hVcred }sk(Bi), wi} pk(So), hVcred );
+
+			claim_B2(Bi, Alive);
+			claim_B3(Bi, Weakagree);
+					
+		}
+		
+		role Sx{
+			fresh  n, ki, payreq, nnew, cred, VCi, wi : Nonce ;	
+			var DIDb, PDIDb, md, phiid, reqid,  Ni, payid  : Nonce;
+			
+			recv_1(Bi, Sx, {Bi, DIDb, PDIDb, md, phiid, reqid} pk(Sx) );
+			
+			fresh hV: Response;
+			send_2(Sx, Bi, {{DIDb, n, ki} sk(Sx), payreq, hV} pk(Bi), hash(hV) );
+
+			var hV2: Response;
+
+			recv_3(Bi, Sx, {{ki, Ni} sk(Bi), hV2, payid } pk(Sx), hash(hV2)  );
+
+			send_4(Sx, Bi, { {VCi} sk(Sx), cred, xor(ki, nnew), wi } pk(Bi) );
+
+			claim_S1(Sx, Running, Bi, nnew, ki);
+			claim_S2(Sx, Alive);
+			claim_S3(Sx, Weakagree);
+			claim_S6(Sx, Secret, Ni);
+
+		}
+
+
+}

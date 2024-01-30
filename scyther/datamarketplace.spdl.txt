@@ -1,0 +1,73 @@
+usertype xor;
+usertype Response;
+hashfunction hash;
+
+
+protocol datamarketplace(Bi, Sx){
+
+
+		role Bi
+		{
+			fresh DIDb, PDIDb, md, phiid, reqid, Ni, payid : Nonce;
+			
+			
+			var payreq, n, ki, cred, wi, nnew, VCi: Nonce;
+			
+			send_1(Bi, Sx, {Bi, DIDb, PDIDb, md, phiid, reqid} pk(Sx) );
+
+			var hV: Response;
+
+			recv_2(Sx, Bi, {{DIDb, n, ki} sk(Sx), payreq, hV} pk(Bi), hash(hV) );
+
+			fresh hV2: Response;
+
+			send_3(Bi, Sx, {{ki,Ni} sk(Bi), hV2, payid} pk(Sx), hash(hV2) );
+
+			recv_4(Sx, Bi, { {VCi} sk(Sx), cred, xor(ki, nnew), wi } pk(Bi) );
+
+			claim_B1(Bi, Running, Sx, nnew, ki);
+			claim_B2(Bi, Alive);
+			claim_B3(Bi, Weakagree);
+			claim_B4(Bi, Secret, ki);
+			claim_B5(Bi, Secret, n);
+			claim_B6(Bi, Secret, Ni);
+		
+		}
+
+
+		role Sx
+		{
+			fresh  n, ki, payreq, nnew, cred, VCi, wi : Nonce ;
+			
+			var DIDb, PDIDb, md, phiid, reqid,  Ni, payid  : Nonce;
+			
+			recv_1(Bi, Sx, {Bi, DIDb, PDIDb, md, phiid, reqid} pk(Sx) );
+
+			fresh hV: Response;
+
+			send_2(Sx, Bi, {{DIDb, n, ki} sk(Sx), payreq, hV} pk(Bi), hash(hV) );
+
+			var hV2: Response;
+
+			recv_3(Bi, Sx, {{ki, Ni} sk(Bi), hV2, payid } pk(Sx), hash(hV2)  );
+
+			send_4(Sx, Bi, { {VCi} sk(Sx), cred, xor(ki, nnew), wi } pk(Bi) );
+
+			claim_S1(Sx, Running, Bi, nnew, ki);
+			claim_S2(Sx, Alive);
+			claim_S3(Sx, Weakagree);
+			claim_S4(Sx, Secret, ki);
+			claim_S5(Sx, Secret, n);
+			claim_S6(Sx, Secret, Ni);
+			
+
+
+		}
+
+
+
+
+
+
+
+}
